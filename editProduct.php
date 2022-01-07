@@ -25,6 +25,7 @@ $listImage=executeResult($sqlImage);
     ?>
         <div class="container rounded bg-white mt-5 mb-5">
             <form action="editController.php?id=<?php echo ($item['id']) ?>" method="get">
+                <input hidden name="action" value="update">
                 <div class="row">
                     <div class="col-md-2 border-right">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" style="height: 180px; width: 170px" src="<?php echo ($item['image_url']) ?>">
@@ -65,7 +66,7 @@ $listImage=executeResult($sqlImage);
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Status</label>
-                                    <input disabled name="status" type="text" class="form-control" value="<?php echo ($item['status']) ?>">
+                                    <input name="status" type="text" class="form-control" value="<?php echo ($item['status']) ?>">
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Subcategory ID</label>
@@ -110,6 +111,9 @@ $listImage=executeResult($sqlImage);
                                             echo('<div class="col-md-12">
                                                 <label class="labels">Anh '.$image['id'].' URL</label>
                                                 <input type="text" name="image'.$image['id'].'" class="form-control" value="'.$image['image_url'].'">
+                                                <div class="mt-2 text-center">
+                                                    <a href="editController.php?productId='.$product[0]['id'].'&idAnh='.$image['id'].'&action=delete"><span>Delete Image</span></a>
+                                                </div>
                                             </div>');
                                             // ++$count;
                                         }
@@ -122,12 +126,6 @@ $listImage=executeResult($sqlImage);
                                 
                             </div>
                             
-                            <!-- </div> -->
-                            <!-- <div class="col-md-12">
-                                    <label class="labels">Sale</label>
-                                    <input type="text" name="sale" class="form-control" value="<?php echo ($item['sale']) ?>">
-                                </div> -->
-                            <!-- </div>     -->
                             </div>
                             
                     </div>

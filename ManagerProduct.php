@@ -22,6 +22,7 @@ if ($current_page > $total_page) {
 //tim start
 $start = ($current_page - 1) * $limit;
 $result = mysqli_query($conn, "SELECT * FROM `product` LIMIT $start, $limit ");
+unset($_SESSION['mess']);
 
 }else{
     header("Location: login.php");
