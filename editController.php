@@ -1,5 +1,6 @@
 <?php
 session_start();
+    header('Content-Type: text/html; charset=utf-8');
     require_once('db/dbhelper.php');
     $_SESSION['mess']="";
     
@@ -20,7 +21,7 @@ session_start();
     
     if(!empty($_GET['id']) && $_GET['action']=="update" ){
         $id=$_GET['id'];
-        $name=$_GET['name'];
+        $name=$_GET['nameProduct'];
         $code=$_GET['code'];
         $image_url=$_GET['image_url'];
         $price=$_GET['price'];

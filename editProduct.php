@@ -4,9 +4,11 @@ require_once('db/dbhelper.php');
 $id = $_GET['id'];
 $sql = "select * from product WHERE id=" . $id;
 $product = executeResult($sql);
-$sqlImage="select * from `image` WHERE product_id=".$id;
-$listImage=executeResult($sqlImage);
+$sqlImage = "select * from `image` WHERE product_id=" . $id;
+$listImage = executeResult($sqlImage);
 // $_SESSION['mess'];
+$sqlSubcategory = "select sub_category.* from category inner join sub_category on sub_category.category_id =category.id ";
+$resultSubcategory = executeResult($sqlSubcategory);
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,7 +41,7 @@ $listImage=executeResult($sqlImage);
                                 <h4 class="text-right">PRODUCT MANAGER</h4>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6"><label class="labels">Name</label><input type="text" name="name" class="form-control" placeholder="Name" value="<?php echo ($item['name']) ?>"></div>
+                                <div class="col-md-6"><label class="labels">Name</label><input type="text" name="nameProduct" class="form-control" value="<?php echo ($item['name']) ?>"></div>
                                 <!-- <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div> -->
                             </div>
                             <div class="row mt-3">
@@ -71,6 +73,17 @@ $listImage=executeResult($sqlImage);
                                 <div class="col-md-12">
                                     <label class="labels">Subcategory ID</label>
                                     <input name="subcate" type="text" class="form-control" value="<?php echo ($item['sub_category_id']) ?>">
+                                    <select class="form-select" name="subcate" aria-label="Default select example">
+                                        <?php
+                                            foreach($resultSubcategory as $listSubcate){
+                                                echo('<option ');
+                                                if($listSubcate['id']==$item['sub_category_id']){
+                                                    echo('selected ');
+                                                }
+                                                echo('value='.$listSubcate['id'].'">'.$listSubcate['sub_category_name'].'</option>');
+                                            }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Description</label>
@@ -81,58 +94,58 @@ $listImage=executeResult($sqlImage);
                                     <input type="text" name="sale" class="form-control" value="<?php echo ($item['sale']) ?>">
                                 </div>
                             </div>
-                                <div class="mt-5 text-center">
-                                    <button type="submit" class="btn btn-primary profile-button" type="button">Update Product</button>
-                                </div>
+                            <div class="mt-5 text-center">
+                                <button type="submit" class="btn btn-primary profile-button" type="button">Update Product</button>
+                            </div>
                         <?php
-                            }
-                            if(isset($_SESSION['mess'])){
-                                echo('<h3>'.$_SESSION['mess'].'</h3>');
-                            }
+                    }
+                    if (isset($_SESSION['mess'])) {
+                        echo ('<h3>' . $_SESSION['mess'] . '</h3>');
+                    }
                         ?>
-                        
+
                         </div>
                     </div>
-                    <div class="col-md-5 border-right" >
-                    <div class="p-3 py-5">
+                    <div class="col-md-5 border-right">
+                        <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="text-right">IMAGE MANAGE</h4>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-12" hidden><label class="labels">Name</label><input type="text" name="name" class="form-control" placeholder="Name" value="<?php echo ($item['name']) ?>"></div>
+                                <!-- <div class="col-md-12" hidden><label class="labels">Name</label><input type="text" name="name" class="form-control" placeholder="Name" value="<?php echo ($item['name']) ?>"></div> -->
                                 <!-- <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div> -->
                             </div>
                             <div class="row mt-3">
                                 <?php
                                 // $count;
-                                    if(!empty($listImage)){
-                                        foreach($listImage as $image){
-                                            // $count=0;
-                                            echo('<div class="col-md-12">
-                                                <label class="labels">Anh '.$image['id'].' URL</label>
-                                                <input type="text" name="image'.$image['id'].'" class="form-control" value="'.$image['image_url'].'">
+                                if (!empty($listImage)) {
+                                    foreach ($listImage as $image) {
+                                        // $count=0;
+                                        echo ('<div class="col-md-12">
+                                                <label class="labels">Anh ' . $image['id'] . ' URL</label>
+                                                <input type="text" name="image' . $image['id'] . '" class="form-control" value="' . $image['image_url'] . '">
                                                 <div class="mt-2 text-center">
-                                                    <a href="editController.php?productId='.$product[0]['id'].'&idAnh='.$image['id'].'&action=delete"><span>Delete Image</span></a>
+                                                    <a href="editController.php?productId=' . $product[0]['id'] . '&idAnh=' . $image['id'] . '&action=delete"><span>Delete Image</span></a>
                                                 </div>
                                             </div>');
-                                            // ++$count;
-                                        }
+                                        // ++$count;
                                     }
+                                }
                                 ?>
                                 <div class="col-md-12">
                                     <label class="labels">Anh moi</label>
                                     <input type="text" name="imageNew" class="form-control" value="">
                                 </div>
-                                
-                            </div>
-                            
-                            </div>
-                            
-                    </div>
-                    </div>
 
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
-            </form>
+
+        </div>
+        </form>
         </div>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
