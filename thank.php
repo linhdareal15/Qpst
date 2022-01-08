@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,7 +34,7 @@
             <div class="alert alert-success" role="alert">
                 THANK YOU FOR SHOPPING WITH US
             </div>
-            <div><a href="products" class="btn btn-outline-success">BACK TO SHOP</a></div>
+            <div><a href="shop.php" class="btn btn-outline-success">BACK TO SHOP</a></div>
         </div>
 
         <?php

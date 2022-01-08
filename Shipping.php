@@ -15,7 +15,7 @@
     }
     $sqlTotal = " select COUNT(id)  FROM shipping";
     $totalShippingId=executeResult($sqlTotal, true);
-    $ShippingId=$totalShippingId['COUNT(id)'];
+    $ShippingId=$totalShippingId['COUNT(id)']+1;
     $sqlShipping= 'insert INTO `shipping` (`id`, `name`, `phone`, `address`) VALUES ('.++$ShippingId.'," '.$name.'", "'.$phone.'", "'.$address.'")';
     print_r($sqlShipping);
     execute($sqlShipping);
@@ -46,6 +46,7 @@
         if ($conn->query($sqlOrderDetail) === TRUE) {
             ++$idOrderDetail;
             echo "New record created successfully";
+            header("Location: thank.php");
           } else {
             echo "Error: " . $sqlOrderDetail . "<br>" . $conn->error;
           }
