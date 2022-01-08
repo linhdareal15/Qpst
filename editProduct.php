@@ -9,6 +9,9 @@ $listImage = executeResult($sqlImage);
 // $_SESSION['mess'];
 $sqlSubcategory = "select sub_category.* from category inner join sub_category on sub_category.category_id =category.id ";
 $resultSubcategory = executeResult($sqlSubcategory);
+
+$sqlStatus='SELECT * FROM `status_product`';
+$resultStatus=executeResult($sqlStatus);
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,13 +20,17 @@ $resultSubcategory = executeResult($sqlSubcategory);
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Manager Product</title>
     <link rel="stylesheet" href="css/mangeProfile.css">
+    <link rel="icon" href="img/logo.png" />
+    <link rel="stylesheet" href="css/styleALL.css" />
+    <link rel="stylesheet" href="css/NavbarCSS.css" />
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/c8e4d183c2.js"></script>
+    
 </head>
 
 <body>
     <?php
+    include_once('layout/header.php');
     foreach ($product as $item) {
-
-
     ?>
         <div class="container rounded bg-white mt-5 mb-5">
             <form action="editController.php?id=<?php echo ($item['id']) ?>" method="get">
@@ -38,10 +45,10 @@ $resultSubcategory = executeResult($sqlSubcategory);
                     <div class="col-md-4 border-right">
                         <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">PRODUCT MANAGER</h4>
+                                <h4 class="text-right">QUẢN LÍ SẢN PHẨM</h4>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6"><label class="labels">Name</label><input type="text" name="nameProduct" class="form-control" value="<?php echo ($item['name']) ?>"></div>
+                                <div class="col-md-6"><label class="labels">TÊN SẢN PHẨM</label><input type="text" name="nameProduct" class="form-control" value="<?php echo ($item['name']) ?>"></div>
                                 <!-- <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div> -->
                             </div>
                             <div class="row mt-3">
@@ -51,28 +58,37 @@ $resultSubcategory = executeResult($sqlSubcategory);
                                     <input name="id" type="text" class="form-control" value="<?php echo ($item['id']) ?>" disabled="">
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="labels">Code</label>
+                                    <label class="labels">MÃ</label>
                                     <input name="code" type="text" class="form-control" placeholder="enter url" value="<?php echo ($item['code']) ?>">
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="labels">ImageUrl</label>
+                                    <label class="labels">ẢNH CHÍNH (LINK)</label>
                                     <input name="image_url" type="text" class="form-control" placeholder="enter url" value="<?php echo ($item['image_url']) ?>">
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="labels">Price</label>
+                                    <label class="labels">GIÁ</label>
                                     <input name="price" type="text" class="form-control" placeholder="enter price" value="<?php echo ($item['price']) ?>">
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="labels">Quantity</label>
+                                    <label class="labels">SỐ LƯỢNG</label>
                                     <input name="quantity" type="text" class="form-control" placeholder="${product.getQuantity()}" value="<?php echo ($item['quantity']) ?>">
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="labels">Status</label>
-                                    <input name="status" type="text" class="form-control" value="<?php echo ($item['status']) ?>">
+                                    <label class="labels">TRẠNG THÁI</label>
+                                    <select class="form-select" name="status" aria-label="Default select example">
+                                        <?php
+                                            foreach($resultStatus as $listStatus){
+                                                echo('<option ');
+                                                if($listStatus['id']==$item['status']){
+                                                    echo('selected ');
+                                                }
+                                                echo('value='.$listStatus['id'].'>'.$listStatus['status'].'</option>');
+                                            }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="labels">Subcategory ID</label>
-                                    <input name="subcate" type="text" class="form-control" value="<?php echo ($item['sub_category_id']) ?>">
+                                    <label class="labels">PHÂN LOẠI</label>
                                     <select class="form-select" name="subcate" aria-label="Default select example">
                                         <?php
                                             foreach($resultSubcategory as $listSubcate){
@@ -80,13 +96,13 @@ $resultSubcategory = executeResult($sqlSubcategory);
                                                 if($listSubcate['id']==$item['sub_category_id']){
                                                     echo('selected ');
                                                 }
-                                                echo('value='.$listSubcate['id'].'">'.$listSubcate['sub_category_name'].'</option>');
+                                                echo('value='.$listSubcate['id'].'>'.$listSubcate['sub_category_name'].'</option>');
                                             }
                                         ?>
                                     </select>
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="labels">Description</label>
+                                    <label class="labels">MÔ TẢ</label>
                                     <input name="descript" type="text" class="form-control" value="<?php echo ($item['description']) ?>">
                                 </div>
                                 <div class="col-md-12">
@@ -109,7 +125,7 @@ $resultSubcategory = executeResult($sqlSubcategory);
                     <div class="col-md-5 border-right">
                         <div class="p-3 py-5">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">IMAGE MANAGE</h4>
+                                <h4 class="text-right">QUẢN LÍ ẢNH</h4>
                             </div>
                             <div class="row mt-2">
                                 <!-- <div class="col-md-12" hidden><label class="labels">Name</label><input type="text" name="name" class="form-control" placeholder="Name" value="<?php echo ($item['name']) ?>"></div> -->
@@ -122,7 +138,7 @@ $resultSubcategory = executeResult($sqlSubcategory);
                                     foreach ($listImage as $image) {
                                         // $count=0;
                                         echo ('<div class="col-md-12">
-                                                <label class="labels">Anh ' . $image['id'] . ' URL</label>
+                                                <label class="labels">ẢNH ' . $image['id'] . ' URL</label>
                                                 <input type="text" name="image' . $image['id'] . '" class="form-control" value="' . $image['image_url'] . '">
                                                 <div class="mt-2 text-center">
                                                     <a href="editController.php?productId=' . $product[0]['id'] . '&idAnh=' . $image['id'] . '&action=delete"><span>Delete Image</span></a>
@@ -147,7 +163,11 @@ $resultSubcategory = executeResult($sqlSubcategory);
         </div>
         </form>
         </div>
+    <script src="js/navbar.js"></script>
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+        <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 </body>
 
