@@ -96,9 +96,11 @@ $result = mysqli_query($conn, "SELECT * FROM `product` LIMIT $start, $limit ");
                         
                         <div class="product-details">
                             <a href="detail?productId=${product.id}" class="p-name">' . $row['name'] . '</a>
-                            <span class="p-price">$' . $row['price'] . '</span>
-                        </div>
-                    </div>');
+                            <span class="p-price">');
+                            echo number_format($row['price'],0,'.',',');  
+                            echo(' ₫</span>
+                            </div>
+                        </div>'); 
                 }
                 ?>
 
