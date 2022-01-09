@@ -1,7 +1,7 @@
 <?php
     session_start();
     $message;
-        if(isset($_SESSION['account']) && isset($_SESSION['cart'])){
+    //    if(isset($_SESSION['account']) && isset($_SESSION['cart'])){
             if(!isset($_SESSION['cart']) || $_SESSION['cart']==null){
                 $message="<h1>Khong co san pham nao</h1>";
             }
@@ -9,14 +9,16 @@
                 $totalItem=sizeof($_SESSION['cart']);
                 $product=$_SESSION['cart'];
                 $_SESSION['tong']=0;
+                // header('Location: cart.php');
             }
-        }else{
-            if(!isset($_SESSION['account'])){
-                header('Location: login.php');
-            }elseif(!isset($_SESSION['cart'])){
-                header('Location: shop.php');
-            }
-        }
+        // }
+        // else{
+        //     if(!isset($_SESSION['account'])){
+        //         header('Location: login.php');
+        //     }elseif(!isset($_SESSION['cart'])){
+        //         header('Location: shop.php');
+        //     }
+    //    }
             
 ?>
 <!DOCTYPE html>
